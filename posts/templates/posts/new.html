@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% include static %}
+
+{% block content %}
+<div class="container">
+  <h1>새로운 글 쓰기</h1>
+  <form action="{% url 'posts:create' %}" method="POST" enctype="multipart/form-data">
+    {% include 'posts/_form.html' with form=form btn_value="글 작성"%}
+  </form>
+</div>
+
+{% endblock %}
