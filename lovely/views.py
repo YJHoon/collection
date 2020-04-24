@@ -1,13 +1,29 @@
-from django.shortcuts import render
-
-# Create your views here.
-def first(request):
-  return render(request, 'lovely/first.html')
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .models import Lovely
 
 
-def second(request):
-  return render(request, 'lovely/second.html')
+def main(request):
+  context = {
+    'lovely': Lovely.objects.all()
+  }
+  return render(request, 'lovely/main.html', context)
 
 
-def third(request):
-  return render(request, 'lovely/third.html')
+@login_required(login_url= '/accounts/login')
+def new(request):
+  return render(request, 'lovely/new.html')
+
+
+@login_required(login_url= '/accounts/login')
+def create(request):
+  if request.method == "POST":
+    image = request.POST.get('image')
+    Lovely(image = image).save()
+    Lovely.objects.create(image = image)
+    return redirect('main')
+
+
+@login_required(login_url= '/accounts/login')
+def delete(request):
+  return redirect('main')

@@ -3,6 +3,7 @@
 {% block content %}
 <div class="container">
   <h1>제훈's Blog</h1>
+  <a href="{% url 'posts:new' %}">새 글 쓰기</a>
   <div class="row">
     {% for post in posts %}
       <div class="col-md-4 col-12">

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>댕냥스타그램</h1>
+  <a href="{% url 'lovely:new' %}">사진 등록</a>
+  {% for img in lovely %}
+    <img src="" alt="..." class="img-thumbnail">
+  {% endfor %}
+</div>
+{% endblock %}

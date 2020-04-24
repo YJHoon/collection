@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Post
 from .forms import PostForm
+from django.contrib.auth.decorators import login_required
 import pdb
 from django.views.decorators.http import require_POST
 
@@ -13,6 +14,9 @@ def main(request):
   return render(request, 'posts/main.html', context)
 
 
+
+
+@login_required(login_url= '/accounts/login')
 def new(request):
   context = {
     'form': PostForm()
@@ -20,6 +24,7 @@ def new(request):
   return render(request, 'posts/new.html', context)
 
 
+@login_required(login_url= '/accounts/login')
 @require_POST
 def create(request):
   form = PostForm(request.POST, request.FILES or None)
@@ -28,6 +33,7 @@ def create(request):
   return redirect(form.instance)
 
 
+@login_required(login_url= '/accounts/login')
 def show(request, post_id):
   post = get_object_or_404(Post, pk=post_id)
   default_view_count = post.view_count
@@ -48,6 +54,7 @@ def edit(request, post_id):
   return render(request, 'posts/edit.html', context)
 
 
+@login_required(login_url= '/accounts/login')
 @require_POST
 def update(request, post_id):
   post = get_object_or_404(Post, pk=post_id)
@@ -59,6 +66,7 @@ def update(request, post_id):
   return redirect(post)
     
 
+@login_required(login_url= '/accounts/login')
 @require_POST
 def delete(request, post_id):
   post = get_object_or_404(Post, pk=post_id)

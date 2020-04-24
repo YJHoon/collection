@@ -1,7 +1,11 @@
 from django.db import models
 from django.urls import reverse
+from users.models import User
+from django.utils.translation import ugettext_lazy as _
+from templates.shared.timestamped import TimeStampedModel
 
-class Post(models.Model):
+
+class Post(TimeStampedModel):
     class Meta:
         ordering = ['-created_at']
 
@@ -10,20 +14,13 @@ class Post(models.Model):
         (1, "뉴스"),
         (2, "소설"),
     ]
-    title = models.CharField(max_length=10,
-                             verbose_name="제목")
-    content = models.TextField(verbose_name="내용")
-    view_count = models.IntegerField(default=0,
-                                    verbose_name="조회수")
-    _type = models.PositiveSmallIntegerField(choices=POST_TYPES,
-                                      verbose_name="게시글 타입")
-    image = models.ImageField(upload_to='posts/img', default="posts/default/dgu.png")
 
-    created_at = models.DateTimeField(auto_now_add = True,
-                                      verbose_name="등록 시간")
-    updated_at = models.DateTimeField(auto_now = True,
-                                      verbose_name="업데이트 시간")
-# Create your models here.
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name="사용자")
+    title = models.CharField(_("제목"), max_length=50)
+    content = models.TextField(_("내용"))
+    view_count = models.IntegerField(_("조회수"), default=0)
+    _type = models.PositiveSmallIntegerField(_("게시글 타입"), choices=POST_TYPES)
+    image = models.ImageField(_("게시글"), upload_to='posts/img', default="posts/default/dgu.png")
 
 
     def __str__(self):

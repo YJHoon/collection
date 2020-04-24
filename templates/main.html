@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+  <h1>제훈's 여러가지</h1>
+  <div class="row">
+    {% include 'shared/_card.html' with title="포스트" content="대충 글 써 놓는 곳" URL="posts:main"%}
+    {% include 'shared/_card.html' with title="댕냥이" content="대충 사진 올리는 곳" URL="lovely:main"%}
+  </div>
+</div>
+
+{% endblock %}
