@@ -4,8 +4,15 @@
 <div class="container">
   <h1>댕냥스타그램</h1>
   <a href="{% url 'lovely:new' %}">사진 등록</a>
-  {% for img in lovely %}
-    <img src="" alt="..." class="img-thumbnail">
-  {% endfor %}
+
+  <div class="row" style="margin-top: 20px;">
+    {% for img in lovely %}
+      {% if img.image %}
+        <div class="col-md-3">
+          <img src="{{ img.image.url }}" alt="..." class="img-thumbnail">
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}
